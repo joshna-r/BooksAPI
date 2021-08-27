@@ -1,11 +1,22 @@
 from django.db import models
+import re
+from django.core.exceptions import ValidationError
+
+
+def nameFiledValidator(value):
+    s = str(value)
+    if len(s)== 13:
+        return value
+    else:
+        raise ValidationError("ISBN Number Must be 13 digit")
+
 
 # Create your models here.
 class book(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=50, null=True)
-    isbn = models.CharField('ISBN', max_length=13, unique=True,
-                             help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
+    isbn = models.CharField('ISBN', max_length=13,help_text="Enter 13 digit ISBN Number", unique=True, 
+                             validators=[nameFiledValidator])
     date_of_publication = models.DateField(null=True, blank=True)
 
 
@@ -16,6 +27,7 @@ class User(models.Model):
     email = models.EmailField(max_length=100)
     password = models.CharField(max_length=50)
     wishlist = models.ManyToManyField(book,blank=True)
+    # wishlist = models.ForeignKey('book', on_delete=models.CASCADE)
 
     def __str__(self):
         """String for representing the Model object."""

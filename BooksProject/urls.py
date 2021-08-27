@@ -16,8 +16,8 @@ Including another URLconf
 from API.views import *
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
+# from Wish import views
 
 # Creating Router Object
 router = DefaultRouter()
@@ -25,6 +25,7 @@ router = DefaultRouter()
 # Register StudentViewSet with Router
 router.register('books', Books, basename= 'book')
 router.register('user', User, basename= 'User')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
